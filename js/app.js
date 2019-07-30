@@ -47,18 +47,28 @@ function loadNames(event) {
     // xhr.send();
 }
 
-function sendRequest(url) {
+// function sendRequest(url) {
+//     fetch(url)
+//         .then(function (response) {
+//             return response.json();
+//         }).then(function (names) {
+//             console.log(names);
+//             let html = "";
+//             names.forEach(function (people) {
+//                 html += `<p> ${people.name}</p>`;
+//             });
+//             document.getElementById("resultado").innerHTML = html;
+//         }).catch(function (error) {
+//             console.log("error", error);
+//         });
+// }
+
+let sendRequest = (url) => {
     fetch(url)
-        .then(function (response) {
-            return response.json();
-        }).then(function (names) {
-            console.log(names);
+        .then(response => response.json())
+        .then(names => {
             let html = "";
-            names.forEach(function (people) {
-                html += `<p> ${people.name}</p>`;
-            });
+            names.forEach(people => html += `<p> ${people.name}</p>`);
             document.getElementById("resultado").innerHTML = html;
-        }).catch(function (error) {
-            console.log("error", error);
-        });
+        }).catch(error => console.log("error", error));
 }
