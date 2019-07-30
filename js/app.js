@@ -1,7 +1,7 @@
 document.querySelector("#generar-nombre").addEventListener("submit", loadNames);
-function loadNames(event){
+function loadNames(event) {
     event.preventDefault();
-    
+
     const source = document.getElementById("origen");
     const sourceSelected = source.options[source.selectedIndex].value;
 
@@ -23,24 +23,42 @@ function loadNames(event){
     if (amount !== "") {
         url += `amount=${amount}&`
     }
-    
-    // connect with ajax
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.onload = function() {
-        if(this.status == 200){
-            const names = JSON.parse(this.responseText);
-            let htmlNames = `
-                <h2 style="text-align:center;">Nombres generados</h2>`;
-            htmlNames += `<ul class="lista">`
+    //with fetech api
+    sendRequest(url);
 
-            names.forEach(function(names){
-                htmlNames += `
-                    <l1>${names.name}</l1><br>`;
+    // // connect with ajax
+    // const xhr = new XMLHttpRequest();
+    // xhr.open("GET", url, true);
+    // xhr.onload = function() {
+    //     if(this.status == 200){
+    //         const names = JSON.parse(this.responseText);
+    //         let htmlNames = `
+    //             <h2 style="text-align:center;">Nombres generados</h2>`;
+    //         htmlNames += `<ul class="lista">`
+
+    //         names.forEach(function(names){
+    //             htmlNames += `
+    //                 <l1>${names.name}</l1><br>`;
+    //         });
+    //         htmlNames += `</ul>`
+    //         document.getElementById("resultado").innerHTML = htmlNames;
+    //     }
+    // }
+    // xhr.send();
+}
+
+function sendRequest(url) {
+    fetch(url)
+        .then(function (response) {
+            return response.json();
+        }).then(function (names) {
+            console.log(names);
+            let html = "";
+            names.forEach(function (people) {
+                html += `<p> ${people.name}</p>`;
             });
-            htmlNames += `</ul>`
-            document.getElementById("resultado").innerHTML = htmlNames;
-        }
-    }
-    xhr.send();
+            document.getElementById("resultado").innerHTML = html;
+        }).catch(function (error) {
+            console.log("error", error);
+        });
 }

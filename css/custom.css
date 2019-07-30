@@ -29,3 +29,11 @@ form {
 .lista li:last-child{
     margin:0;
 }
+#resultado{
+    background-color: cornflowerblue;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    opacity: 0.9;
+    border-radius: 25px;
+}
